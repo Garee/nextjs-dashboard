@@ -1,13 +1,21 @@
+'use client'
+
 import { lusitana } from '@/app/ui/fonts';
+import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import {
   AtSymbolIcon,
-  KeyIcon,
-  ExclamationCircleIcon,
+  KeyIcon
 } from '@heroicons/react/24/outline';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import { signIn } from 'next-auth/react';
+import { FormEvent } from 'react';
 import { Button } from './button';
 
 export default function LoginForm() {
+  const onLogin = async (event: FormEvent) => {
+    event.preventDefault();
+    await signIn("credentials", { email: "email", password: "password" })
+  }
+
   return (
     <form className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
@@ -55,7 +63,7 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <Button className="mt-4 w-full">
+        <Button onClick={onLogin} className="mt-4 w-full">
           Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div className="flex h-8 items-end space-x-1">
